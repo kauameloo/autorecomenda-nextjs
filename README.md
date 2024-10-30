@@ -30,7 +30,7 @@ Siga estas etapas para configurar o projeto em sua máquina local:
 
 ```
 
-git clone [https://github.com/kauameloo/autorecomenda-nextjs.git](https://github.com/kauameloo/autorecomenda-nextjs.git)
+git clone https://github.com/kauameloo/autorecomenda-nextjs.git
 
 ```
 
