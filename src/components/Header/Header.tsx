@@ -13,21 +13,11 @@ import {
 } from "@/components/ui/sheet";
 import { User } from "lucide-react";
 import LoginModal from "../LoginModal/LoginModal";
+import { useAuth } from "../../context/AuthContext";
 
 export default function Navigation() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-  const [user, setUser] = useState<{ email: string; role: string } | null>(
-    null
-  );
-
-  const handleLogin = (userData: { email: string; role: string }) => {
-    setUser(userData);
-    setIsLoginModalOpen(false);
-  };
-
-  const handleLogout = () => {
-    setUser(null);
-  };
+  const { user, logout } = useAuth();
 
   return (
     <nav className="bg-primary text-primary-foreground">
@@ -56,8 +46,10 @@ export default function Navigation() {
           </Link>
           {user ? (
             <div className="flex items-center space-x-2">
-              <span>Olá, {user.email}</span>
-              <Button variant="secondary" onClick={handleLogout}>
+              <span>
+                Olá, {user.email} ({user.role})
+              </span>
+              <Button variant="secondary" onClick={logout}>
                 Sair
               </Button>
             </div>
@@ -108,8 +100,10 @@ export default function Navigation() {
               </Link>
               {user ? (
                 <>
-                  <span>Olá, {user.email}</span>
-                  <Button onClick={handleLogout}>Sair</Button>
+                  <span>
+                    Olá, {user.email} ({user.role})
+                  </span>
+                  <Button onClick={logout}>Sair</Button>
                 </>
               ) : (
                 <Button onClick={() => setIsLoginModalOpen(true)}>Conta</Button>
@@ -121,7 +115,6 @@ export default function Navigation() {
       <LoginModal
         isOpen={isLoginModalOpen}
         onClose={() => setIsLoginModalOpen(false)}
-        onLogin={handleLogin}
       />
     </nav>
   );
