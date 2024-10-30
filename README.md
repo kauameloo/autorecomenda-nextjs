@@ -72,8 +72,7 @@ yarn dev
 
 No diretório do projeto, você pode executar:
 
-- `npm run dev` ou `yarn dev`: Inicia o servidor de
-
-```
-
-```
+- `npm run dev` ou `yarn dev`: Inicia o servidor de desenvolvimento.
+- `npm run build` ou `yarn build`: Compila o projeto para produção.
+- `npm run start` ou `yarn start`: Inicia o servidor após a compilação.
+- `npm run lint` ou `yarn lint`: Executa o linter para verificar possíveis problemas no código.
