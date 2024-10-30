@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Star, MapPin, Phone, Clock, Wrench } from "lucide-react";
 import AgendarServicoModal from "../../components/AgendarServicoModal/AgendarServicoModal";
 import CadastrarOficinaModal from "../../components/CadastrarOficinaModal/CadastrarOficinaModal";
+import { useAuth } from "../../context/AuthContext";
 
 type Oficina = {
   id: number;
@@ -50,6 +51,7 @@ const oficinasIniciais: Oficina[] = [
 ];
 
 export default function Oficinas() {
+  const { user } = useAuth();
   const [oficinas, setOficinas] = useState<Oficina[]>(oficinasIniciais);
   const [searchTerm, setSearchTerm] = useState("");
   const [agendarModalOpen, setAgendarModalOpen] = useState(false);
@@ -84,7 +86,7 @@ export default function Oficinas() {
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Oficinas Recomendadas</h1>
-        {userRole === "admin" && (
+        {user?.role === "admin" && (
           <Button onClick={() => setCadastrarModalOpen(true)}>
             Cadastrar Oficina
           </Button>
