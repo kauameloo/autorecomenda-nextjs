@@ -76,3 +76,10 @@ No diretório do projeto, você pode executar:
 - `npm run build` ou `yarn build`: Compila o projeto para produção.
 - `npm run start` ou `yarn start`: Inicia o servidor após a compilação.
 - `npm run lint` ou `yarn lint`: Executa o linter para verificar possíveis problemas no código.
+
+6. Efetue login com alguns dos seguintes usuários
+
+## Usuários mockados para teste
+
+- Email: `cliente@exemplo.com` senha: `senha123`: Usuário cliente.
+- Email: `admin@exemplo.com` senha: `admin123`: Usuário admin.

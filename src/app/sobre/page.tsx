@@ -91,19 +91,17 @@ export default function SobrePage() {
           {
             name: "Caike Dametto",
             role: "CEO & Fundador",
-            image:
-              "https://media.licdn.com/dms/image/v2/D4D03AQHE6yTyX1kVpg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1725042826733?e=1735776000&v=beta&t=CUIMdw6KtV7Pxk5Y5bpTZpsjnClmwm9TrG7uFKEzZl0",
+            image: "/images/caike.jpeg",
           },
           {
             name: "Kauã de Melo Rodrigues",
             role: "CTO",
-            image: "https://avatars.githubusercontent.com/u/90994025?v=4",
+            image: "/images/kaua.png",
           },
           {
             name: "Guilherme Janunzzi",
             role: "Gerente de Parcerias",
-            image:
-              "https://media.licdn.com/dms/image/v2/D4D03AQFery_ctA-Azw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1727468536584?e=1735776000&v=beta&t=il3A5NH9QX5dckevmvtSkISb8HY9d9kefcHrLYnLt9o",
+            image: "/images/gui.jpeg",
           },
         ].map((member, index) => (
           <Card key={index}>

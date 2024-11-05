@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -13,58 +13,43 @@ import { useAuth } from "../../context/AuthContext";
 type Oficina = {
   id: number;
   nome: string;
-  avaliacao: number;
+  mediaAvaliacao: number;
   endereco: string;
   telefone: string;
-  horario: string;
-  especialidades: string[];
+  horarioFunc: string;
+  statusParceria: string;
 };
-
-const oficinasIniciais: Oficina[] = [
-  {
-    id: 1,
-    nome: "Oficina do João",
-    avaliacao: 4.5,
-    endereco: "Rua A, 123 - Centro",
-    telefone: "(11) 1234-5678",
-    horario: "Seg-Sex: 8h-18h, Sáb: 8h-12h",
-    especialidades: ["Motor", "Freios", "Suspensão"],
-  },
-  {
-    id: 2,
-    nome: "Mecânica Expressa",
-    avaliacao: 4.2,
-    endereco: "Av. B, 456 - Jardim Europa",
-    telefone: "(11) 2345-6789",
-    horario: "Seg-Sáb: 7h-20h",
-    especialidades: ["Elétrica", "Ar Condicionado", "Injeção Eletrônica"],
-  },
-  {
-    id: 3,
-    nome: "Auto Center Silva",
-    avaliacao: 4.8,
-    endereco: "Rua C, 789 - Vila Nova",
-    telefone: "(11) 3456-7890",
-    horario: "Seg-Sex: 8h-19h, Sáb: 9h-15h",
-    especialidades: ["Funilaria", "Pintura", "Mecânica Geral"],
-  },
-];
 
 export default function Oficinas() {
   const { user } = useAuth();
-  const [oficinas, setOficinas] = useState<Oficina[]>(oficinasIniciais);
+  const [oficinas, setOficinas] = useState<Oficina[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [agendarModalOpen, setAgendarModalOpen] = useState(false);
   const [cadastrarModalOpen, setCadastrarModalOpen] = useState(false);
   const [selectedOficina, setSelectedOficina] = useState<Oficina | null>(null);
   const [userRole, setUserRole] = useState<string | null>(null);
 
-  const filteredOficinas = oficinas.filter(
-    (oficina) =>
-      oficina.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      oficina.especialidades.some((esp) =>
-        esp.toLowerCase().includes(searchTerm.toLowerCase())
-      )
+  const fetchOficinas = async () => {
+    try {
+      const response = await fetch("/api/oficinas");
+      if (!response.ok) throw new Error("Erro ao buscar oficinas");
+
+      const data: Oficina[] = await response.json();
+      const oficinasAtivas = data.filter(
+        (oficina) => oficina.statusParceria === "A"
+      );
+      setOficinas(oficinasAtivas);
+    } catch (error) {
+      console.error("Erro ao carregar oficinas:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchOficinas();
+  }, []);
+
+  const filteredOficinas = oficinas.filter((oficina) =>
+    oficina.nome.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const handleAgendarClick = (oficina: Oficina) => {
@@ -72,14 +57,23 @@ export default function Oficinas() {
     setAgendarModalOpen(true);
   };
 
-  const handleCadastrarOficina = (novaOficina: Omit<Oficina, "id">) => {
-    const id = oficinas.length + 1;
-    setOficinas([...oficinas, { ...novaOficina, id }]);
-  };
+  const handleCadastrarOficina = async (
+    novaOficina: Omit<Oficina, "id" | "statusParceria">
+  ) => {
+    try {
+      const response = await fetch("/api/oficinas", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...novaOficina, statusParceria: "A" }),
+      });
 
-  // Simula o login do usuário
-  const handleLogin = (user: { email: string; role: string }) => {
-    setUserRole(user.role);
+      if (!response.ok) throw new Error("Erro ao cadastrar oficina");
+
+      // Após o cadastro bem-sucedido, atualize a lista de oficinas
+      await fetchOficinas();
+    } catch (error) {
+      console.error("Erro ao cadastrar nova oficina:", error);
+    }
   };
 
   return (
@@ -109,7 +103,7 @@ export default function Oficinas() {
                 <span>{oficina.nome}</span>
                 <Badge variant="secondary" className="flex items-center">
                   <Star className="w-4 h-4 mr-1 fill-yellow-400 text-yellow-400" />
-                  {oficina.avaliacao.toFixed(1)}
+                  {oficina.mediaAvaliacao.toFixed(1)}
                 </Badge>
               </CardTitle>
             </CardHeader>
@@ -125,24 +119,14 @@ export default function Oficinas() {
                 </p>
                 <p className="flex items-center text-muted-foreground">
                   <Clock className="w-4 h-4 mr-2" />
-                  {oficina.horario}
+                  {oficina.horarioFunc}
                 </p>
-                <div className="flex items-center">
-                  <Wrench className="w-4 h-4  mr-2 text-muted-foreground" />
-                  <div className="flex flex-wrap gap-1">
-                    {oficina.especialidades.map((esp, index) => (
-                      <Badge key={index} variant="outline">
-                        {esp}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
               </div>
               <Button
                 className="w-full mt-4"
                 onClick={() => handleAgendarClick(oficina)}
               >
-                Agendar Serviço
+                Agendar Serviço (em desenvolvimento)
               </Button>
             </CardContent>
           </Card>
