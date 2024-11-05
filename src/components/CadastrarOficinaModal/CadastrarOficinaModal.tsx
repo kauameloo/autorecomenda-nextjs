@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -10,18 +9,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
-type Especialidade = {
-  id: number;
-  nome: string;
-};
 
 type CadastrarOficinaModalProps = {
   isOpen: boolean;
@@ -38,32 +26,6 @@ export default function CadastrarOficinaModal({
   const [endereco, setEndereco] = useState("");
   const [telefone, setTelefone] = useState("");
   const [horarioFunc, setHorarioFunc] = useState("");
-  const [especialidades, setEspecialidades] = useState<number[]>([]);
-  const [opcoesEspecialidades, setOpcoesEspecialidades] = useState<
-    Especialidade[]
-  >([]);
-
-  useEffect(() => {
-    const fetchEspecialidades = async () => {
-      try {
-        const response = await fetch("/api/especialidades");
-        const data = await response.json();
-        setOpcoesEspecialidades(data);
-      } catch (error) {
-        console.error("Erro ao buscar especialidades:", error);
-      }
-    };
-    fetchEspecialidades();
-  }, []);
-
-  const handleEspecialidadeChange = (especialidadeId: number) => {
-    setEspecialidades(
-      (prev) =>
-        prev.includes(especialidadeId)
-          ? prev.filter((id) => id !== especialidadeId) // Remove se já está selecionado
-          : [...prev, especialidadeId] // Adiciona se não está selecionado
-    );
-  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Star, MapPin, Phone, Clock, Wrench } from "lucide-react";
+import { Star, MapPin, Phone, Clock } from "lucide-react";
 import AgendarServicoModal from "../../components/AgendarServicoModal/AgendarServicoModal";
 import CadastrarOficinaModal from "../../components/CadastrarOficinaModal/CadastrarOficinaModal";
 import { useAuth } from "../../context/AuthContext";
@@ -27,7 +27,6 @@ export default function Oficinas() {
   const [agendarModalOpen, setAgendarModalOpen] = useState(false);
   const [cadastrarModalOpen, setCadastrarModalOpen] = useState(false);
   const [selectedOficina, setSelectedOficina] = useState<Oficina | null>(null);
-  const [userRole, setUserRole] = useState<string | null>(null);
 
   const fetchOficinas = async () => {
     try {
