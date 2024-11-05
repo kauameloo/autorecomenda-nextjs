@@ -65,7 +65,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-8 pt-8 border-t text-center text-muted-foreground">
-          <p>&copy; 2023 AutoRecomenda. Todos os direitos reservados.</p>
+          <p>&copy; 2024 AutoRecomenda. Todos os direitos reservados.</p>
         </div>
       </div>
     </footer>

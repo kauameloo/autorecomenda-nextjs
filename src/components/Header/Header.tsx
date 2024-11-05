@@ -46,9 +46,7 @@ export default function Navigation() {
           </Link>
           {user ? (
             <div className="flex items-center space-x-2">
-              <span>
-                Olá, {user.email} ({user.role})
-              </span>
+              <span>Olá, {user.email}</span>
               <Button variant="secondary" onClick={logout}>
                 Sair
               </Button>
