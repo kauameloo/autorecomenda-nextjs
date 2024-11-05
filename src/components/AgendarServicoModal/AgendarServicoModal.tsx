@@ -23,7 +23,6 @@ export default function AgendarServicoModal({ isOpen, onClose, oficinaNome }: Ag
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // Aqui você implementaria a lógica de agendamento
     console.log("Agendamento enviado")
     onClose()
   }

@@ -5,6 +5,6 @@
     "@typescript-eslint/no-explicit-any": "off", // Desativa o erro de 'any' inesperado
     "@typescript-eslint/no-unused-vars": "off", // Desativa o erro de variáveis não usadas
     "@typescript-eslint/no-empty-interface": "off", // Desativa o erro de interface vazia
-    "@typescript-eslint/no-empty-object-type": "off", // Desativa o erro de objetos vazios
+    "@typescript-eslint/no-empty-object-type": "off" // Desativa o erro de objetos vazios
   }
 }
